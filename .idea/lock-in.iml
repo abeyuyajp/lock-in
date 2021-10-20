@@ -120,6 +120,10 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/webmozart/assert" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/laravel/ui" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/auth0/auth0-php" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/auth0/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/auth0/login" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
