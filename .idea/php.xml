@@ -114,10 +114,6 @@
       <path value="$PROJECT_DIR$/backend/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/backend/vendor/guzzlehttp/promises" />
       <path value="$PROJECT_DIR$/backend/vendor/guzzlehttp/psr7" />
-      <path value="$PROJECT_DIR$/backend/vendor/laravel/ui" />
-      <path value="$PROJECT_DIR$/backend/vendor/auth0/auth0-php" />
-      <path value="$PROJECT_DIR$/backend/vendor/auth0/php-jwt" />
-      <path value="$PROJECT_DIR$/backend/vendor/auth0/login" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
