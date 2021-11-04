@@ -119,6 +119,13 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/auth0/auth0-php" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/auth0/php-jwt" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/auth0/login" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/php-cs-fixer/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/filesystem" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/options-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/symfony/stopwatch" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/friendsofphp/php-cs-fixer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
