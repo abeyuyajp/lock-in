@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-//use Auth0\Login\Auth0Controller;
-//use App\Http\Controllers\Auth\Auth0IndexController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,18 +13,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Auth::routes();
 
-//// Auth0
-//Route::get('/auth0/callback', [Auth0Controller::class, 'callback'])->name('auth0-callback');
-//Route::get('/login', [Auth0IndexController::class, 'login'])->name('login');
-//Route::get('/logout', [Auth0IndexController::class, 'logout'])->name('logout');
+Route::get('/{any?}', fn() => view('index'))->where('any', '.+');
+
 
 
