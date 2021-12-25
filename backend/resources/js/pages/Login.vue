@@ -62,8 +62,12 @@ export default {
     }
   },
   methods: {
-    login () {
-      console.log(this.loginForm)
+    async login () {
+      // authストアのloginアクションを呼び出す
+      await this.$store.dispatch('auth/login', this.loginForm)
+
+      // トップページに移動する
+      this.$router.push('/')
     },
     async register () {
       // authストアのregisterアクションを呼び出す
@@ -71,6 +75,10 @@ export default {
 
       // トップページに移動する
       this.$router.push('/')
+    },
+    async logout () {
+      await this.$store.dispatch('auth/logout')
+      this.$router.push('/login')
     }
   }
 }
