@@ -26,3 +26,6 @@ Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'
 
 // ログアウト
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+
+// ログインユーザー
+Route::get('/user', fn() => \Auth::user())->name('user');
