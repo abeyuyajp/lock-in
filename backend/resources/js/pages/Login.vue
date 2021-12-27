@@ -15,6 +15,14 @@
     <!-- ログインフォーム -->
     <div class="panel" v-show="tab === 1">
       <form class="form" @submit.prevent="login">
+        <div v-if="loginErrors" class="errors">
+          <ul v-if="loginErrors.email">
+            <li v-for="msg in loginErrors.email" :key="msg">{{ msg }}</li>
+          </ul>
+          <ul v-if="loginErrors.password">
+            <li v-for="msg in loginErrors.password" :key="msg">{{ msg }}</li>
+          </ul>
+        </div>
         <label for="login-email">メールアドレス</label>
         <input type="text" class="form__item" id="login-email" v-model="loginForm.email">
         <label for="login-password">パスワード</label>
@@ -64,6 +72,9 @@ export default {
   computed: {
     apiStatus () {
       return this.$store.state.auth.apiStatus
+    },
+    loginErrors () {
+      return this.$store.state.auth.loginErrorMessages
     }
   },
   methods: {
@@ -86,7 +97,13 @@ export default {
     async logout () {
       await this.$store.dispatch('auth/logout')
       this.$router.push('/login')
+    },
+    clearError () {
+      this.$store.commit('auth/setLoginErrorMessages', null)
     }
+  },
+  created () {
+    this.clearError()
   }
 }
 </script>
