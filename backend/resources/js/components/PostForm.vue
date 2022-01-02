@@ -1,7 +1,10 @@
 <template>
   <div v-show="value" class="photo-form">
     <h2 class="title">投稿する</h2>
-    <form class="form" @submit.prevent="submit">
+    <div v-show="loading" class="panel">
+      <Loader>送信中...</Loader>
+    </div>
+    <form v-show="! loading" class="form" @submit.prevent="submit">
       <div class="errors" v-if="errors">
         <ul v-if="errors.postForm">
           <li v-for="msg in errors.postForm" :key="msg">{{ msg }}</li>
@@ -25,10 +28,15 @@
 
 <script>
 import {CREATED, UNPROCESSABLE_ENTITY} from "../util";
+import Loader from './Loader.vue'
 
 export default {
+  components: {
+    Loader
+  },
   data () {
     return {
+      loading: false,
       postForm: {
         work_type: '',
         room_name: '',
@@ -46,7 +54,9 @@ export default {
   },
   methods: {
     async submit () {
+      this.loading = true
       const response = await axios.post('/api/posts', this.postForm)
+      this.loading = false
 
       if (response.status === UNPROCESSABLE_ENTITY) {
         this.errors = response.data.errors
