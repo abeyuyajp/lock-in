@@ -2,6 +2,11 @@
   <div v-show="value" class="photo-form">
     <h2 class="title">投稿する</h2>
     <form class="form" @submit.prevent="submit">
+      <div class="errors" v-if="errors">
+        <ul v-if="errors.post">
+          <li v-for="msg in errors.post" :key="msg">{{ msg }}</li>
+        </ul>
+      </div>
       <label for="work_type">作業名</label>
       <input class="form__item" type="text" id="work_type">
       <label for="room_name">ルーム名</label>
@@ -19,10 +24,13 @@
 
 
 <script>
+import {CREATED, UNPROCESSABLE_ENTITY} from "../util";
+
 export default {
   data () {
     return {
-      post:null
+      post: null,
+      errors: null
     }
   },
   props: {
@@ -35,9 +43,21 @@ export default {
     async submit () {
       const formData = new FormData()
       formData.append('post', this.post)
-      const response = await axios.post('/api/photos', formData)
+      const response = await axios.post('/api/posts', formData)
+
+      if (response.status === UNPROCESSABLE_ENTITY) {
+        this.errors = response.data.errors
+        return false
+      }
 
       this.$emit('input', false)
+
+      if (response.status !== CREATED) {
+        this.$store.commit('errors/setCode', response.status)
+        return false
+      }
+
+      this.$router.push(`/posts/${response.data.id}`)
     }
   }
 }
