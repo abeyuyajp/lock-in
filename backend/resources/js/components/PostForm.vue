@@ -3,18 +3,18 @@
     <h2 class="title">投稿する</h2>
     <form class="form" @submit.prevent="submit">
       <div class="errors" v-if="errors">
-        <ul v-if="errors.post">
-          <li v-for="msg in errors.post" :key="msg">{{ msg }}</li>
+        <ul v-if="errors.postForm">
+          <li v-for="msg in errors.postForm" :key="msg">{{ msg }}</li>
         </ul>
       </div>
       <label for="work_type">作業名</label>
-      <input class="form__item" type="text" id="work_type">
+      <input class="form__item" type="text" id="work_type" v-model="postForm.work_type">
       <label for="room_name">ルーム名</label>
-      <input class="form__item" type="text" id="room_name">
+      <input class="form__item" type="text" id="room_name" v-model="postForm.room_name">
       <label for="start">開始時刻</label>
-      <input class="form__item" type="datetime-local" id="start">
+      <input class="form__item" type="datetime-local" id="start" v-model="postForm.start">
       <label for="end">終了時刻</label>
-      <input class="form__item" type="datetime-local" id="end">
+      <input class="form__item" type="datetime-local" id="end" v-model="postForm.end">
       <div class="form__button">
         <button type="submit" class="button button--inverse">投稿する</button>
       </div>
@@ -29,7 +29,12 @@ import {CREATED, UNPROCESSABLE_ENTITY} from "../util";
 export default {
   data () {
     return {
-      post: null,
+      postForm: {
+        work_type: '',
+        room_name: '',
+        start: '',
+        end: ''
+      },
       errors: null
     }
   },
@@ -41,9 +46,7 @@ export default {
   },
   methods: {
     async submit () {
-      const formData = new FormData()
-      formData.append('post', this.post)
-      const response = await axios.post('/api/posts', formData)
+      const response = await axios.post('/api/posts', this.postForm)
 
       if (response.status === UNPROCESSABLE_ENTITY) {
         this.errors = response.data.errors

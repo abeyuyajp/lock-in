@@ -21,9 +21,10 @@ class PostController extends Controller
      *
      * @param StorePost $request
      */
-    public function create(Request $request)
+    public function create(StorePost $request)
     {
-        $post = new Post();
+        $request = $request->all();
+        $post = new Post($request);
 
         // データベースエラー時に投稿削除を行うため
         // トランザクションを利用する

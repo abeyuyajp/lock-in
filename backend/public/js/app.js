@@ -2294,7 +2294,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      post: null,
+      postForm: {
+        work_type: '',
+        room_name: '',
+        start: '',
+        end: ''
+      },
       errors: null
     };
   },
@@ -2309,32 +2314,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var formData, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                formData = new FormData();
-                formData.append('post', _this.post);
-                _context.next = 4;
-                return axios.post('/api/posts', formData);
+                _context.next = 2;
+                return axios.post('/api/posts', _this.postForm);
 
-              case 4:
+              case 2:
                 response = _context.sent;
 
                 if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY)) {
-                  _context.next = 8;
+                  _context.next = 6;
                   break;
                 }
 
                 _this.errors = response.data.errors;
                 return _context.abrupt("return", false);
 
-              case 8:
+              case 6:
                 _this.$emit('input', false);
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
-                  _context.next = 12;
+                  _context.next = 10;
                   break;
                 }
 
@@ -2342,10 +2345,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 12:
+              case 10:
                 _this.$router.push("/posts/".concat(response.data.id));
 
-              case 13:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -4752,10 +4755,10 @@ var render = function() {
         [
           _vm.errors
             ? _c("div", { staticClass: "errors" }, [
-                _vm.errors.post
+                _vm.errors.postForm
                   ? _c(
                       "ul",
-                      _vm._l(_vm.errors.post, function(msg) {
+                      _vm._l(_vm.errors.postForm, function(msg) {
                         return _c("li", { key: msg }, [_vm._v(_vm._s(msg))])
                       }),
                       0
@@ -4767,29 +4770,97 @@ var render = function() {
           _c("label", { attrs: { for: "work_type" } }, [_vm._v("作業名")]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.postForm.work_type,
+                expression: "postForm.work_type"
+              }
+            ],
             staticClass: "form__item",
-            attrs: { type: "text", id: "work_type" }
+            attrs: { type: "text", id: "work_type" },
+            domProps: { value: _vm.postForm.work_type },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.postForm, "work_type", $event.target.value)
+              }
+            }
           }),
           _vm._v(" "),
           _c("label", { attrs: { for: "room_name" } }, [_vm._v("ルーム名")]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.postForm.room_name,
+                expression: "postForm.room_name"
+              }
+            ],
             staticClass: "form__item",
-            attrs: { type: "text", id: "room_name" }
+            attrs: { type: "text", id: "room_name" },
+            domProps: { value: _vm.postForm.room_name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.postForm, "room_name", $event.target.value)
+              }
+            }
           }),
           _vm._v(" "),
           _c("label", { attrs: { for: "start" } }, [_vm._v("開始時刻")]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.postForm.start,
+                expression: "postForm.start"
+              }
+            ],
             staticClass: "form__item",
-            attrs: { type: "datetime-local", id: "start" }
+            attrs: { type: "datetime-local", id: "start" },
+            domProps: { value: _vm.postForm.start },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.postForm, "start", $event.target.value)
+              }
+            }
           }),
           _vm._v(" "),
           _c("label", { attrs: { for: "end" } }, [_vm._v("終了時刻")]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.postForm.end,
+                expression: "postForm.end"
+              }
+            ],
             staticClass: "form__item",
-            attrs: { type: "datetime-local", id: "end" }
+            attrs: { type: "datetime-local", id: "end" },
+            domProps: { value: _vm.postForm.end },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.postForm, "end", $event.target.value)
+              }
+            }
           }),
           _vm._v(" "),
           _vm._m(0)

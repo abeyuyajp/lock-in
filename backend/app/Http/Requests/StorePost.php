@@ -24,7 +24,10 @@ class StorePost extends FormRequest
     public function rules()
     {
         return [
-            //
+            'work_type' => 'required|max:255',
+            'room_name' => 'required|max:255',
+            'start'     => 'required|date',
+            'end'       => 'required|date'
         ];
     }
 }
