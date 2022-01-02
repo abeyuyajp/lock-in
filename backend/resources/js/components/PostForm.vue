@@ -70,6 +70,12 @@ export default {
         return false
       }
 
+      // メッセージ登録
+      this.$store.commit('message/setContent', {
+        content: '投稿が完了しました！',
+        timeout: 6000
+      })
+
       this.$router.push(`/posts/${response.data.id}`)
     }
   }
