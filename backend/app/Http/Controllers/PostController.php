@@ -13,7 +13,18 @@ class PostController extends Controller
     public function __construct()
     {
         // 認証が必要
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['index']);
+    }
+
+    /**
+     * 写真一覧
+     */
+    public function index()
+    {
+        $posts = Post::with(['owner'])
+            ->orderBy(Post::CREATED_AT, 'desc')->paginate();
+
+        return $posts;
     }
 
     /**

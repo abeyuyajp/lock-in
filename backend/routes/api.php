@@ -34,3 +34,6 @@ Route::get('/user', fn() => \Auth::user())->name('user');
 
 // 投稿機能
 Route::post('/posts', [App\Http\Controllers\PostController::class, 'create'])->name('posts.create');
+
+// 投稿一覧
+Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
