@@ -1,3 +1,48 @@
 <template>
-  <h1>Post List</h1>
+  <div class="photo-list">
+    <div class="grid">
+      <Post
+        class="grid__item"
+        v-for="post in posts"
+        :key="post.id"
+        :item="post"
+      />
+    </div>
+  </div>
 </template>
+
+<script>
+import { OK } from '../util'
+import Post from '../components/Post.vue'
+
+export default {
+  components: {
+    Post
+  },
+  data() {
+    return {
+      posts: []
+    }
+  },
+  methods: {
+    async fetchPosts () {
+      const response = await axios.get('/api/posts')
+
+      if (response.status !== OK) {
+        this.$store.commit('error/setCode', response.status)
+        return false
+      }
+
+      this.posts = response.data.data
+    }
+  },
+  watch: {
+    $route: {
+      async handler () {
+        await this.fetchPosts()
+      },
+      immediate: true
+    }
+  }
+}
+</script>
