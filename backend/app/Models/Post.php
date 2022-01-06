@@ -19,6 +19,8 @@ class Post extends Model
 
     protected $table = 'posts';
 
+    protected $perPage = 15;
+
     public function owner()
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id', 'users');
