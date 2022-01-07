@@ -14,15 +14,31 @@
       <h2 class="photo-detail__title">
         <i class="icon icon-md-chatboxes"></i>Comments
       </h2>
+      <form v-if="isLogin" @submit.prevent="addComment" class="form">
+        <div v-if="commentErrors" class="errors">
+          <ul v-if="commentErrors.content">
+            <li v-for="msg in commentErrors.content" :key="msg">{{ msg }}</li>
+          </ul>
+        </div>
+        <textarea class="form__item" v-model="commentContent"></textarea>
+        <div class="form__button">
+          <button type="submit" class="button button--inverse">コメントを送信する</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 
 <script>
-import { OK } from '../util'
+import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
 
 export default {
+  computed: {
+    isLogin () {
+      return this.$store.getters['auth/check']
+    }
+  },
   props: {
     id: {
       type: String,
@@ -31,7 +47,9 @@ export default {
   },
   data () {
     return {
-      post: null
+      post: null,
+      commentContent: '',
+      commentErrors: null
     }
   },
   methods: {
@@ -45,6 +63,27 @@ export default {
       }
 
       this.post = response.data
+    },
+    async addComment () {
+      const response = await axios.post(`/api/posts/${this.id}/comments`, {
+        content: this.commentContent
+      })
+
+      // バリデーションエラー
+      if (response.status === UNPROCESSABLE_ENTITY) {
+        this.commentErrors = response.data.errors
+        return false
+      }
+
+      this.commentContent = ''
+      // エラーメッセージをクリア
+      this.commentErrors = null
+
+      // その他のエラー
+      if (response.status !== CREATED) {
+        this.$store.commit('error/setCode', response.status)
+        return false
+      }
     }
   },
   watch: {
