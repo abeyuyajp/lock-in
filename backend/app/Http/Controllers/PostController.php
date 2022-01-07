@@ -13,7 +13,7 @@ class PostController extends Controller
     public function __construct()
     {
         // 認証が必要
-        $this->middleware('auth')->except(['index']);
+        $this->middleware('auth')->except(['index', 'show']);
     }
 
     /**
@@ -50,5 +50,19 @@ class PostController extends Controller
         }
 
         return response($post, 201);
+    }
+
+    /**
+     * 投稿詳細
+     *
+     * @param string $id
+     * @return Post
+     */
+    public function show(string $id)
+    {
+        $post = Post::where('id', $id)->with(['owner'])->first();
+
+        // 投稿データが見つからなかった場合は、404を返却
+        return $post ?? abort(404);
     }
 }

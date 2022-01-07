@@ -37,3 +37,6 @@ Route::post('/posts', [App\Http\Controllers\PostController::class, 'create'])->n
 
 // 投稿一覧
 Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+
+// 投稿詳細
+Route::get('/posts/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
