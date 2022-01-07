@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePost;
+use App\Http\Requests\StoreComment;
+use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -60,9 +62,26 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::where('id', $id)->with(['owner'])->first();
+        $post = Post::where('id', $id)->with(['owner', 'comments.author'])->first();
 
         // 投稿データが見つからなかった場合は、404を返却
         return $post ?? abort(404);
+    }
+
+    /**
+     * コメント投稿
+     *
+     */
+    public function addComment(StoreComment $request, Post $post)
+    {
+        $comment = new Comment();
+        $comment->content = $request->get('content');
+        $comment->user_id = Auth::user()->id;
+        $post->comments()->save($comment);
+
+        // authorリレーションをロードするためにコメントを取得しなおす
+        $new_comment = Comment::where('id', $comment->id)->with('author')->first();
+
+        return response($new_comment, 201);
     }
 }
