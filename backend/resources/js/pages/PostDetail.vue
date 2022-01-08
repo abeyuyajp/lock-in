@@ -14,6 +14,21 @@
       <h2 class="photo-detail__title">
         <i class="icon icon-md-chatboxes"></i>Comments
       </h2>
+      <ul v-if="post.comments.length > 0" class="photo-detail__comments">
+        <li
+          v-for="comment in post.comments"
+          :key="comment.content"
+          class="photo-detail__comments"
+        >
+          <p class="photo-detail__commentBody">
+            {{ comment.content }}
+          </p>
+          <p class="photo-detail__commentInfo">
+            {{ comment.author.name }}
+          </p>
+        </li>
+      </ul>
+      <p v-else>コメントはまだ投稿されていません</p>
       <form v-if="isLogin" @submit.prevent="addComment" class="form">
         <div v-if="commentErrors" class="errors">
           <ul v-if="commentErrors.content">
@@ -84,6 +99,11 @@ export default {
         this.$store.commit('error/setCode', response.status)
         return false
       }
+
+      this.post.comments = [
+        response.data,
+        ...this.post.comments
+      ]
     }
   },
   watch: {
