@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with(['owner'])
+        $posts = Post::with(['owner', 'likes'])
             ->orderBy(Post::CREATED_AT, 'desc')->paginate();
 
         return $posts;
@@ -62,7 +62,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::where('id', $id)->with(['owner', 'comments.author'])->first();
+        $post = Post::where('id', $id)->with(['owner', 'comments.author', 'likes'])->first();
 
         // 投稿データが見つからなかった場合は、404を返却
         return $post ?? abort(404);
