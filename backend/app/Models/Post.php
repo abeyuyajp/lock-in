@@ -40,4 +40,13 @@ class Post extends Model
     {
         return $this->hasMany('App\Models\Comment')->orderBy('id', 'desc');
     }
+
+    /**
+     * リレーション -usersテーブル
+     *
+     */
+    public function likes()
+    {
+        return $this->belongsToMany('App\User', 'likes')->withTimestamps();
+    }
 }
