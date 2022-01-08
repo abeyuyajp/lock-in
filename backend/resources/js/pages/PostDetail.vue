@@ -8,8 +8,13 @@
       <p>{{post.owner.name}}</p>
     </figure>
     <div class="photo-detail__pane">
-      <button class="button button--like" title="Like Post">
-        <i class="icon icon-md-heart"></i>12
+      <button
+        class="button button--like"
+        :class="{ 'button--liked': post.liked_by_user }"
+        title="Like Post"
+        @click="onLikeClick"e
+      >
+        <i class="icon icon-md-heart"></i>{{ post.likes_count }}
       </button>
       <h2 class="photo-detail__title">
         <i class="icon icon-md-chatboxes"></i>Comments
@@ -104,6 +109,40 @@ export default {
         response.data,
         ...this.post.comments
       ]
+    },
+    onLikeClick () {
+      if (! this.isLogin) {
+        alert('いいね機能を使うにはログインしてください。')
+        return false
+      }
+
+      if (this.post.liked_by_user) {
+        this.unlike()
+      } else {
+        this.like()
+      }
+    },
+    async like () {
+      const response = await axios.put(`/api/posts/${this.id}/like`)
+
+      if (reposnse.status !== OK) {
+        this.$store.commit('error/setCode', response.status)
+        return false
+      }
+
+      this.post.likes_count = this.post.likes_count + 1
+      this.post.liked_by_user = true
+    },
+    async unlike () {
+      const response = await axios.delete(`/api/posts/${this.id}/like`)
+
+      if (response.status !== OK) {
+        this.$store.commit('error/setCode', response.status)
+        return false
+      }
+
+      this.post.likes_count = this.post.likes_count - 1
+      this.post.liked_by_user = false
     }
   },
   watch: {

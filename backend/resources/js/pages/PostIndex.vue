@@ -6,6 +6,7 @@
         v-for="post in posts"
         :key="post.id"
         :item="post"
+        @like="onLikeClick"
       />
     </div>
     <Pagination :current-page="currentPage" :last-page="lastPage" />
@@ -48,6 +49,50 @@ export default {
       this.posts = response.data.data
       this.currentPage = response.data.current_page
       this.lastPage = response.data.last_page
+    },
+    onLikeClick ({ id, liked }) {
+      if (! this.$store.getters['auth/check']) {
+        alert('いいね機能を使うにはログインしてください。')
+        return false
+      }
+
+      if (liked) {
+        this.unlike(id)
+      } else {
+        this.like(id)
+      }
+    },
+    async like (id) {
+      const response = await axios.put(`/api/posts/${id}/like`)
+
+      if (response.status !== OK) {
+        this.$store.commit('error/setCode', reponse.status)
+        return false
+      }
+
+      this.posts = this.posts.map(post => {
+        if(post.id === response.data.post_id) {
+          post.likes_count += 1
+          post.liked_by_user = true
+        }
+        return post
+      })
+    },
+    async unlike (id) {
+      const response = await axios.delete(`/api/posts/${id}/like`)
+
+      if (response.status !== OK) {
+        this.$store.commit('error/setCode', response.status)
+        return false
+      }
+
+      this.posts = this.posts.map(post => {
+        if (post.id === response.data.post_id) {
+          post.likes_count -= 1
+          post.liked_by_user = false
+        }
+        return post
+      })
     }
   },
   watch: {

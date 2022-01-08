@@ -14,9 +14,11 @@
       <div class="photo__controls">
         <button
           class="photo__action photo__action--like"
+          :class="{ 'photo__action--liked': item.liked_by_user }"
           title="Like post"
+          @click.prevent="like"
         >
-          <i class="icon icon-md-heart"></i>12
+          <i class="icon icon-md-heart"></i>{{ item.likes_count }}
         </button>
       </div>
     </RouterLink>
@@ -29,6 +31,14 @@ export default {
     item: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    like () {
+      this.$emit('like', {
+        id: this.item.id,
+        liked: this.item.liked_by_user
+      })
     }
   }
 }
