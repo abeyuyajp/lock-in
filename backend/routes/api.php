@@ -43,3 +43,9 @@ Route::get('/posts/{id}', [App\Http\Controllers\PostController::class, 'show'])-
 
 // コメント
 Route::post('/posts/{post}/comments', [App\Http\Controllers\PostController::class, 'addComment'])->name('posts.comment');
+
+// いいね
+Route::post('/posts/{id}/like', [App\Http\Controllers\PostController::class, 'like'])->name('posts.like');
+
+// いいね解除
+Route::delete('/posts/{id}/like',  [App\Http\Controllers\PostController::class, 'unlike'])->name('posts.delete');
