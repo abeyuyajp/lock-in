@@ -44,6 +44,7 @@ class Post extends Model
     /**
      * リレーション -usersテーブル
      *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function likes()
     {
