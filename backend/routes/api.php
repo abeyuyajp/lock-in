@@ -40,3 +40,6 @@ Route::get('/posts', [App\Http\Controllers\PostController::class, 'index'])->nam
 
 // 投稿詳細
 Route::get('/posts/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('posts.show');
+
+// コメント
+Route::post('/posts/{post}/comments', [App\Http\Controllers\PostController::class, 'addComment'])->name('posts.comment');

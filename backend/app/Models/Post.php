@@ -21,8 +21,23 @@ class Post extends Model
 
     protected $perPage = 15;
 
+    /**
+     * リレーション -usersテーブル
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function owner()
     {
         return $this->belongsTo('App\Models\User', 'user_id', 'id', 'users');
+    }
+
+    /**
+     * リレーション -commentsテーブル
+     *
+     *  @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment')->orderBy('id', 'desc');
     }
 }
