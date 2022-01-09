@@ -7,6 +7,7 @@ import Login from './pages/Login.vue'
 import PostIndex from './pages/PostIndex.vue'
 import SystemError from './pages/errors/System.vue'
 import PostDetail from './pages/PostDetail.vue'
+import NotFound from './pages/errors/NotFound'
 
 import store from './store'
 
@@ -45,6 +46,10 @@ const routes = [
   {
     path: '/500',
     component: SystemError
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ]
 

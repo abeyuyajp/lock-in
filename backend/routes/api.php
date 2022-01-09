@@ -49,3 +49,10 @@ Route::post('/posts/{id}/like', [App\Http\Controllers\PostController::class, 'li
 
 // いいね解除
 Route::delete('/posts/{id}/like',  [App\Http\Controllers\PostController::class, 'unlike'])->name('posts.delete');
+
+// トークンリフレッシュ
+Route::get('/refresh-token', function (Illuminate\Http\Request $request) {
+    $request->session()->regenerateToken();
+
+    return response()->json();
+});
